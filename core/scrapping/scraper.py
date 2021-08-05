@@ -27,7 +27,7 @@ class BrowserManager:
         # set_chromium_version(self.chromium_version)
 
         headless = os.getenv('HEADLESS', 'true').lower() == 'true'
-        self.browser = await launch(headless=True,
+        self.browser = await launch(headless=headless,
                                     handleSIGINT=False,
                                     handleSIGTERM=False,
                                     handleSIGHUP=False,

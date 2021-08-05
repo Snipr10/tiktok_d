@@ -130,6 +130,8 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
     reposts = models.IntegerField(default=0)
     viewed = models.IntegerField(default=0)
+    sphinx_id = models.CharField(max_length=4096)
+    comments = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'prsr_parser_tik_posts'
@@ -141,3 +143,52 @@ class PostContent(models.Model):
 
     class Meta:
         db_table = 'prsr_parser_tik_posts_description'
+
+
+class Music(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    author_nickname = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        db_table = 'prsr_parser_tik_musics'
+
+
+class Hashtag(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        db_table = 'prsr_parser_tik_hashtags'
+
+
+class PostHashtag(models.Model):
+    post_id = models.IntegerField()
+    hashtag_id = models.IntegerField()
+
+    class Meta:
+        unique_together = (('post_id', 'hashtag_id'),)
+        db_table = 'prsr_parser_tik_posts_hashtags'
+
+
+class Author(models.Model):
+    id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=255, null=True, blank=True)
+    nickname = models.CharField(max_length=255, null=True, blank=True)
+    url = models.CharField(max_length=255, null=True, blank=True)
+    followers = models.IntegerField(default=0)
+    following = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
+    digg = models.IntegerField(default=0)
+    created_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'prsr_parser_tik_users'
+
+
+class AuthorDescription(models.Model):
+    id = models.IntegerField(primary_key=True)
+    description = models.CharField(max_length=4096, null=True, blank=True)
+
+    class Meta:
+        db_table = 'prsr_parser_tik_users_description'
