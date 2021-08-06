@@ -1,7 +1,6 @@
 import datetime
 
 from core.models import Author, AuthorDescription, Music, Post, PostContent, Hashtag, PostHashtag
-from core.scrapping.scrapers.hashtag import parsing_by_hashtag
 from core.utils.utils import get_sphinx_id, get_md5_text
 from tiktok.settings import batch_size
 

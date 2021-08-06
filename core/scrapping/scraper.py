@@ -32,9 +32,10 @@ class BrowserManager:
                                     handleSIGTERM=False,
                                     handleSIGHUP=False,
                                     args=[
-                                        "--no-sandbox"
+                                        "--no-sandbox",
+                                        # '--proxy-server=51.137.45.118:8080'
                                     ])
-
+        # await page.authenticate({'username': 'KWE18Q', 'password': 'y08j96'})
         return self
 
     async def __aexit__(self, type, value, traceback):
