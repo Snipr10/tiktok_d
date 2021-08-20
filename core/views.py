@@ -13,9 +13,19 @@ from core.parsing_by_username import parsing_username
 @csrf_exempt
 @api_view(["GET"])
 @permission_classes((AllowAny,))
-def test(request):
+def test_dava(request):
     # parsing_hashtag('test')
     s = False
     while s == False:
         s = parsing_username('dava_m')
+    return Response("Ok")
+
+
+@csrf_exempt
+@api_view(["GET"])
+@permission_classes((AllowAny,))
+def test_car(request):
+    s = False
+    while s == False:
+        s = parsing_hashtag('s')
     return Response("Ok")
