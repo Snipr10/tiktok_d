@@ -140,7 +140,7 @@ class Post(models.Model):
 
 class PostContent(models.Model):
     id = models.IntegerField(primary_key=True)
-    content = models.CharField(max_length=4096, null=True, blank=True)
+    description = models.CharField(max_length=4096, null=True, blank=True)
 
     class Meta:
         db_table = 'prsr_parser_tik_posts_description'
