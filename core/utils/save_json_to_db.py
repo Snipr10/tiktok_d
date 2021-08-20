@@ -29,7 +29,7 @@ def save(result_posts):
             comments=post['stats']['commentCount']
             )
         )
-        posts_content.append(PostContent(id=post['id'], content=post['desc']))
+        posts_content.append(PostContent(id=post['id'], description=post['desc']))
         music.append(
             Music(id=post['music']['id'], author_nickname=post['music']['authorName'], title=post['music']['title'])
         )
