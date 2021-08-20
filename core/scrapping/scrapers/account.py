@@ -12,6 +12,8 @@ CAPTCHA_TIMEOUT = 1 * 1000
 async def parsing_account(url, proxy):
     print(proxy)
     async with BrowserManager(proxy) as browser_manager:
+        print("BrowserManager")
+
         browser = browser_manager.browser
         page = await browser.newPage()
         await page._client.send('Network.setCookies', {

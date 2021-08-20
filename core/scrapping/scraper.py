@@ -28,6 +28,7 @@ class BrowserManager:
         # set_chromium_version(self.chromium_version)
 
         headless = os.getenv('HEADLESS', 'true').lower() == 'true'
+        print(  f'--proxy-server={self.proxy.ip}:{self.proxy.port}')
         self.browser = await launch(headless=headless,
                                     handleSIGINT=False,
                                     handleSIGTERM=False,
