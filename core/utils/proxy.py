@@ -17,6 +17,8 @@ def get_proxy():
         print(1)
         time.sleep(random.randint(0, 10) / 10)
         added_proxy_list = list(Proxy.objects.all().values_list('id', flat=True))
+        print(1.1)
+
         proxy = AllProxy.objects.filter(~Q(id__in=added_proxy_list), ~Q(port=0), ~Q(login='sergmga_gmail_com'),
                                         ~Q(login__contains='usr'),
                                         ~Q(login='sega364_pd_gmail_com'), ~Q(proxy_password='eTaYo7'), ip__isnull=False,
