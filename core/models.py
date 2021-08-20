@@ -22,24 +22,23 @@ class UpdateIndex(models.Model):
         db_table = 'prsr_update_index'
 
 
-
 class AllProxy(models.Model):
     ip = models.CharField(max_length=256)
     port = models.IntegerField()
     login = models.CharField(max_length=256)
     proxy_password = models.CharField(max_length=256)
-    last_used = models.DateTimeField(null=True, blank=True)
-    last_used_y = models.DateTimeField(null=True, blank=True)
+    # last_used = models.DateTimeField(null=True, blank=True)
+    # last_used_y = models.DateTimeField(null=True, blank=True)
     failed = models.IntegerField()
     errors = models.IntegerField()
     foregin = models.IntegerField()
     banned_fb = models.IntegerField()
     banned_y =models.IntegerField()
     banned_tw = models.IntegerField()
-    valid_untill = models.DateTimeField(default=datetime.now()+timedelta(days=5))
+    # valid_untill = models.DateTimeField(default=datetime.now()+timedelta(days=5))
     timezone = models.CharField(max_length=256)
     v6 = models.IntegerField()
-    last_modified = models.DateTimeField(null=True, blank=True)
+    # last_modified = models.DateTimeField(null=True, blank=True)
     checking = models.BooleanField()
 
     class Meta:
