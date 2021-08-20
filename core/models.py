@@ -51,6 +51,7 @@ class Proxy(models.Model):
     last_used = models.DateTimeField(null=True, blank=True)
     errors = models.IntegerField(default=0)
     banned = models.BooleanField(default=False)
+    captcha = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'prsr_parser_proxy_tik'

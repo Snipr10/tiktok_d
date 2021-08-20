@@ -15,8 +15,9 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 
 class BrowserManager:
 
-    def __init__(self, chromium_version=None, **kargs):
+    def __init__(self, proxy, chromium_version=None, **kargs):
         self.browser = None
+        self.proxy = proxy
         self.params = kargs
 
         # default chromium version for pyppeteer==0.2.5 is 588429 (see pyppeteer.__chromium_revision__)
@@ -33,7 +34,7 @@ class BrowserManager:
                                     handleSIGHUP=False,
                                     args=[
                                         "--no-sandbox",
-                                        # '--proxy-server=51.137.45.118:8080'
+                                        f'--proxy-server={self.proxy.ip}:{self.proxy.port}'
                                     ])
         # await page.authenticate({'username': 'KWE18Q', 'password': 'y08j96'})
         return self

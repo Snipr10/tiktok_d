@@ -9,14 +9,14 @@ NEW_PAGE_TIMEOUT = 60 * 1000
 CAPTCHA_TIMEOUT = 1 * 1000
 
 
-async def parsing_account(url):
-
-    async with BrowserManager() as browser_manager:
+async def parsing_account(url, proxy):
+    async with BrowserManager(proxy) as browser_manager:
         browser = browser_manager.browser
         page = await browser.newPage()
         await page._client.send('Network.setCookies', {
             'cookies': generate_cookie(),
         })
+        await page.authenticate({'username': proxy.login, 'password': proxy.proxy_password})
 
         await page.setUserAgent(USER_AGENT)
         body = []
@@ -24,6 +24,7 @@ async def parsing_account(url):
         page.on("response",
                 lambda req: asyncio.ensure_future(get_headers(req, body, url)))
         await page.goto(url)
+
         try:
             await page.waitForSelector("[role='dialog'", timeout=CAPTCHA_TIMEOUT)
             return AccountResult(success=False, captcha=True)

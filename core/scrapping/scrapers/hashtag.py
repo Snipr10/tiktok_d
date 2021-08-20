@@ -11,9 +11,8 @@ USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Ge
 CHROME_REVISION = '884014'
 
 
-async def parsing_by_hashtag(url):
-
-    async with BrowserManager() as browser_manager:
+async def parsing_by_hashtag(url, proxy):
+    async with BrowserManager(proxy) as browser_manager:
         browser = browser_manager.browser
         page = await browser.newPage()
         await page.evaluateOnNewDocument(
@@ -22,6 +21,8 @@ async def parsing_by_hashtag(url):
             }"""
         )
         await page.setUserAgent(USER_AGENT)
+        await page.authenticate({'username': proxy.login, 'password': proxy.proxy_password})
+
         body = []
 
         page.on("response",

@@ -24,7 +24,7 @@ def get_proxy():
             new_proxy = Proxy.objects.create(id=proxy.id)
             return new_proxy, format_proxies(proxy)
 
-        used_proxy = Proxy.objects.filter(banned=False,
+        used_proxy = Proxy.objects.filter(banned=False, captcha=False,
                                           last_used__lte=update_time_timezone(
                                               timezone.localtime()
                                           ) - datetime.timedelta(minutes=5)).order_by('taken', 'last_used').first()
@@ -45,7 +45,8 @@ def get_proxy():
         return get_proxy()
 
 
-def stop_proxy(proxy):
+def stop_proxy(proxy, captcha=0):
+    proxy.captcha = captcha
     proxy.taken = 0
     proxy.last_used = update_time_timezone(timezone.localtime())
     proxy.save()
@@ -54,7 +55,8 @@ def stop_proxy(proxy):
 def get_proxies(proxy):
     proxy_info = AllProxy.objects.filter(id=proxy.id).first()
     if proxy_info is not None:
-        return format_proxies(proxy_info)
+        # return format_proxies(proxy_info)
+        return proxy_info
     return None
 
 
