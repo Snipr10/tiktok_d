@@ -14,12 +14,15 @@ logger = logging.getLogger(__file__)
 
 def get_proxy():
     try:
+        print(1)
         time.sleep(random.randint(0, 10) / 10)
         added_proxy_list = list(Proxy.objects.all().values_list('id', flat=True))
         proxy = AllProxy.objects.filter(~Q(id__in=added_proxy_list), ~Q(port=0), ~Q(login='sergmga_gmail_com'),
                                         ~Q(login__contains='usr'),
                                         ~Q(login='sega364_pd_gmail_com'), ~Q(proxy_password='eTaYo7'), ip__isnull=False,
                                         login__isnull=False).last()
+        print(2)
+
         if proxy is not None:
             new_proxy = Proxy.objects.create(id=proxy.id)
             return new_proxy, format_proxies(proxy)
@@ -28,6 +31,7 @@ def get_proxy():
                                           last_used__lte=update_time_timezone(
                                               timezone.localtime()
                                           ) - datetime.timedelta(minutes=5)).order_by('taken', 'last_used').first()
+        print(3)
 
         if used_proxy is not None:
             used_proxy.taken = True
