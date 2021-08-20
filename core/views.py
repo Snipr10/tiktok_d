@@ -15,6 +15,7 @@ from core.parsing_by_username import parsing_username
 @permission_classes((AllowAny,))
 def test(request):
     # parsing_hashtag('test')
-
-    parsing_username('dava_m')
+    s = False
+    while s == False:
+        s = parsing_username('dava_m')
     return Response("Ok")
