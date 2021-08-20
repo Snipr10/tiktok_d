@@ -23,7 +23,7 @@ class UpdateIndex(models.Model):
 
 
 class AllProxy(models.Model):
-    ip = models.CharField()
+    ip = models.CharField(max_length=256)
     port = models.IntegerField()
     login = models.CharField(max_length=256)
     proxy_password = models.CharField(max_length=256)
