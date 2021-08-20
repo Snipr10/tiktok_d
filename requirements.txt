@@ -1,5 +1,4 @@
 amqp==2.5.2
-apturl==0.5.2
 beautifulsoup4==4.9.3
 boto3==1.11.9
 celery==4.4.1
