@@ -11,6 +11,7 @@ def parsing_username(username):
     proxy, proxy_data = get_proxy()
     if proxy is None:
         return None
+    print("start")
     result = loop.run_until_complete(asyncio.wait_for(parsing_account(url, proxy_data), 30000))
 
     stop_proxy(proxy, result.captcha)
