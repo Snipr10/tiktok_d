@@ -27,7 +27,7 @@ def get_proxy():
 
         if proxy is not None:
             new_proxy = Proxy.objects.create(id=proxy.id)
-            return new_proxy, format_proxies(proxy)
+            return new_proxy, proxy
 
         used_proxy = Proxy.objects.filter(banned=False, captcha=False,
                                           last_used__lte=update_time_timezone(
@@ -44,7 +44,7 @@ def get_proxy():
                 used_proxy.save(update_fields=['banned'])
                 return get_proxy()
             else:
-                return used_proxy, proxies
+                return used_proxy, used_proxy
         return None, None
     except Exception as e:
         logger.error(e)
