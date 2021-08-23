@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -17,7 +19,7 @@ def test_dava(request):
     # parsing_hashtag('test')
     s = False
     while s == False:
-        s = parsing_username('dava_m')
+        s = parsing_username('dava_m', datetime.date.today())
     return Response("Ok")
 
 

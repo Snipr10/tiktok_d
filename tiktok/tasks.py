@@ -57,6 +57,11 @@ def start_task_parsing_accounts():
         # if time is None:
         #     time = 0
         # retro_date = select_sources.get(id=sources_item.source_id).retro
+        retro_date = select_sources.get(id=sources_item.source_id).retro
+        last_update = sources_item.last_modified
+        parsing_to = retro_date
+        if not sources_item.foced and last_update is not None:
+            parsing_to = last_update.date()
 
         # TODO TIME
         result = False
@@ -65,7 +70,7 @@ def start_task_parsing_accounts():
             sources_item.save()
             attempt = 0
             while not result and attempt < 10:
-                result = parsing_username(sources_item.data)
+                result = parsing_username(sources_item.data, parsing_to)
                 attempt += 1
         except Exception as e:
             print(e)

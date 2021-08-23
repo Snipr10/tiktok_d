@@ -9,7 +9,7 @@ NEW_PAGE_TIMEOUT = 60 * 1000
 CAPTCHA_TIMEOUT = 1 * 1000
 
 
-async def parsing_account(url, proxy):
+async def parsing_account(url, proxy, parsing_to):
     print(proxy)
     async with BrowserManager(proxy) as browser_manager:
         print("BrowserManager")
@@ -33,5 +33,5 @@ async def parsing_account(url, proxy):
             return AccountResult(success=False, captcha=True)
         except Exception:
             pass
-        await scroll_tiktok(len(body), page, body, attempt=0)
+        await scroll_tiktok(len(body), page, body, attempt=0, parsing_to=parsing_to)
         return AccountResult(body=body)

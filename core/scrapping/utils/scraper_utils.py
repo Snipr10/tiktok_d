@@ -1,10 +1,11 @@
 import asyncio
 import json
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 
 
-async def scroll_tiktok(count, page, body, attempt=0):
+async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None):
     while True:
         await asyncio.sleep(1)
         await page.evaluate("""{window.scrollBy(0, document.body.scrollHeight);}""")
@@ -13,6 +14,10 @@ async def scroll_tiktok(count, page, body, attempt=0):
         else:
             count = body.__len__()
             attempt = 0
+    # check data
+    if parsing_to is not None and datetime.fromtimestamp(body[-1]['createTime']).date() < parsing_to:
+        return
+
     if attempt < 2:
         await asyncio.sleep(5)
         await scroll_tiktok(count, page, body, attempt+1)

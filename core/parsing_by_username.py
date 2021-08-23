@@ -5,7 +5,7 @@ from core.utils.proxy import stop_proxy, get_proxy
 from core.utils.save_json_to_db import save
 
 
-def parsing_username(username):
+def parsing_username(username, parsing_to=None):
     # TODO retro
     url = f"https://www.tiktok.com/@{username}"
     loop = asyncio.new_event_loop()
@@ -14,7 +14,7 @@ def parsing_username(username):
         return None
     print("start")
     try:
-        result = loop.run_until_complete(asyncio.wait_for(parsing_account(url, proxy_data), 30000))
+        result = loop.run_until_complete(asyncio.wait_for(parsing_account(url, proxy_data, parsing_to), 30000))
     except Exception:
         stop_proxy(proxy, banned=1)
         return False
