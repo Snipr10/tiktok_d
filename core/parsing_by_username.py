@@ -6,6 +6,7 @@ from core.utils.save_json_to_db import save
 
 
 def parsing_username(username):
+    # TODO retro
     url = f"https://www.tiktok.com/@{username}"
     loop = asyncio.new_event_loop()
     proxy, proxy_data = get_proxy()
