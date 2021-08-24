@@ -13,6 +13,7 @@ CHROME_REVISION = '884014'
 
 async def parsing_by_hashtag(url, proxy):
     async with BrowserManager(proxy) as browser_manager:
+        print("BrowserManager")
         browser = browser_manager.browser
         page = await browser.newPage()
         await page.evaluateOnNewDocument(
