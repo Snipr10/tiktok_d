@@ -25,8 +25,13 @@ async def parsing_by_hashtag(url, proxy):
             delete navigator.__proto__.webdriver;
             }"""
         )
+        print("evaluateOnNewDocument")
+
         await page.setUserAgent(USER_AGENT)
+        print("setUserAgent")
+
         await page.authenticate({'username': proxy.login, 'password': proxy.proxy_password})
+        print("authenticate")
 
         body = []
 
