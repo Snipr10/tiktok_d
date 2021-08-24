@@ -15,7 +15,10 @@ async def parsing_by_hashtag(url, proxy):
     async with BrowserManager(proxy) as browser_manager:
         print("BrowserManager")
         browser = browser_manager.browser
+        print("browser")
         page = await browser.newPage()
+        print("page")
+
         await page.evaluateOnNewDocument(
             """() => {
             delete navigator.__proto__.webdriver;
