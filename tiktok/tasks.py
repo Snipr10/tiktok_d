@@ -68,9 +68,13 @@ def start_task_parsing_accounts():
         status=1)
     # network_id
     print(1)
-    sources_item = SourcesItems.objects.filter(network_id=9, disabled=0, taken=0,
-                                               source_id__in=list(select_sources.values_list('id', flat=True)))\
-        .order_by('last_modified').last()
+    sources_items = SourcesItems.objects.filter(network_id=9, disabled=0, taken=0,
+                                               source_id__in=list(select_sources.values_list('id', flat=True)))
+    null_sources_items = sources_items.filter(last_modified__isnull=True)
+    if len(null_sources_items) > 0:
+        sources_item = null_sources_items.first()
+    else:
+        sources_item = sources_items.order_by('last_modified').last()
     print(2)
 
     if sources_item:
