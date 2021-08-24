@@ -76,7 +76,7 @@ def start_task_parsing_accounts():
     if sources_item:
         print(2.5)
 
-        time = select_sources.get(id=sources_item.source_id).sources
+        time = select_sources.get(id=sources_item.source_id).retro
         print(3)
 
         if time is None:
