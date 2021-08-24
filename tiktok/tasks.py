@@ -87,6 +87,7 @@ def start_task_parsing_accounts():
 
         if time is None:
             time = 0
+        print(sources_item.last_modified )
         if sources_item.last_modified is None or (
                 sources_item.last_modified + datetime.timedelta(minutes=time) <
                 update_time_timezone(timezone.localtime())):
