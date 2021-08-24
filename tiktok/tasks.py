@@ -67,16 +67,22 @@ def start_task_parsing_accounts():
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
     # network_id
+    print(1)
     sources_item = SourcesItems.objects.filter(network_id=8, disabled=0, taken=0,
                                                source_id__in=list(select_sources.values_list('id', flat=True))) \
         .order_by('last_modified').last()
+    print(2)
+
     if sources_item:
         time = select_sources.get(id=sources_item.source_id).sources
+        print(3)
+
         if time is None:
             time = 0
         if sources_item.last_modified is None or (
                 sources_item.last_modified + datetime.timedelta(minutes=time) <
                 update_time_timezone(timezone.localtime())):
+            print(4)
 
             retro_date = select_sources.get(id=sources_item.source_id).retro
             last_update = sources_item.last_modified
