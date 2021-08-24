@@ -21,14 +21,21 @@ def start_task_parsing_hashtags():
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
+    print("1")
+
     key_source = KeywordSource.objects.filter(source_id__in=list(select_sources.values_list('id', flat=True)))
 
-    # TODO  network_id =9
+    print("2")
+
     key_word = Keyword.objects.filter(network_id=9, enabled=1, taken=0,
                                       id__in=list(key_source.values_list('keyword_id', flat=True))
                                       ).order_by('last_modified').last()
+    print("3")
+
     if key_word:
         select_source = select_sources.get(id=key_source.filter(keyword_id=key_word.id).first().source_id)
+        print("4")
+
         last_update = key_word.last_modified
         time = select_source.sources
         if time is None:
