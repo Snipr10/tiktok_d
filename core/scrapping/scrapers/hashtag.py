@@ -16,6 +16,7 @@ async def parsing_by_hashtag(url, proxy):
         print("BrowserManager")
         browser = browser_manager.browser
         print("browser")
+
         page = await browser.newPage()
         print("page")
 
