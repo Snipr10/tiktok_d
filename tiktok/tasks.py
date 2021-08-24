@@ -50,6 +50,7 @@ def start_task_parsing_hashtags():
                 while not result and attempt < 10:
                     print("key_word start_task_parsing_hashtags")
                     result = parsing_hashtag(key_word.keyword)
+                    print(result)
                     attempt += 1
             except Exception as e:
                 pass
@@ -110,6 +111,8 @@ def start_task_parsing_accounts():
                     print("parsing_username start_task_parsing_accounts")
 
                     result = parsing_username(sources_item.data, parsing_to)
+                    print(result)
+
                     attempt += 1
             except Exception as e:
                 print(e)
