@@ -1,5 +1,6 @@
 import logging
 from datetime import timedelta
+import datetime
 
 import requests
 from django.db.models import Q
@@ -16,6 +17,7 @@ logger = logging.getLogger(__file__)
 
 @app.task
 def start_task_parsing_hashtags():
+    print("start_task_parsing_hashtags")
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
@@ -26,24 +28,34 @@ def start_task_parsing_hashtags():
                                       id__in=list(key_source.values_list('keyword_id', flat=True))
                                       ).order_by('last_modified').last()
     if key_word:
-        result = False
-        try:
-            key_word.taken = 1
+        select_source = select_sources.get(id=key_source.filter(keyword_id=key_word.id).first().source_id)
+        last_update = key_word.last_modified
+        time = select_source.sources
+        if time is None:
+            time = 0
+        if last_update is None or (last_update + datetime.timedelta(minutes=time) <
+                                   update_time_timezone(timezone.localtime())):
+            result = False
+            try:
+                key_word.taken = 1
+                key_word.save()
+                attempt = 0
+                while not result and attempt < 10:
+                    print("key_word start_task_parsing_hashtags")
+                    result = parsing_hashtag(key_word.keyword)
+                    attempt += 1
+            except Exception as e:
+                pass
+            key_word.taken = 0
+            if result:
+                key_word.last_modified = update_time_timezone(timezone.localtime())
             key_word.save()
-            attempt = 0
-            while not result and attempt < 10:
-                result = parsing_hashtag(key_word.keyword)
-                attempt += 1
-        except Exception as e:
-            pass
-        key_word.taken = 0
-        if result:
-            key_word.last_modified = update_time_timezone(timezone.localtime())
-        key_word.save()
 
 
 @app.task
 def start_task_parsing_accounts():
+    print("start_task_parsing_accounts")
+
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
@@ -52,31 +64,36 @@ def start_task_parsing_accounts():
                                                source_id__in=list(select_sources.values_list('id', flat=True))) \
         .order_by('last_modified').last()
     if sources_item:
+        time = select_sources.get(id=sources_item.source_id).sources
+        if time is None:
+            time = 0
+        if sources_item.last_modified is None or (
+                sources_item.last_modified + datetime.timedelta(minutes=time) <
+                update_time_timezone(timezone.localtime())):
 
-        # time = select_sources.get(id=sources_item.source_id).sources
-        # if time is None:
-        #     time = 0
-        # retro_date = select_sources.get(id=sources_item.source_id).retro
-        retro_date = select_sources.get(id=sources_item.source_id).retro
-        last_update = sources_item.last_modified
-        parsing_to = retro_date
-        if not sources_item.foced and last_update is not None:
-            parsing_to = last_update.date()
+            retro_date = select_sources.get(id=sources_item.source_id).retro
+            last_update = sources_item.last_modified
+            parsing_to = retro_date
+            try:
+                if not sources_item.foced and last_update is not None:
+                    parsing_to = last_update.date()
+            except Exception:
+                pass
+            result = False
+            try:
+                sources_item.taken = 1
+                sources_item.save()
+                attempt = 0
+                while not result and attempt < 10:
+                    print("parsing_username start_task_parsing_accounts")
 
-        # TODO TIME
-        result = False
-        try:
-            sources_item.taken = 1
+                    result = parsing_username(sources_item.data, parsing_to)
+                    attempt += 1
+            except Exception as e:
+                print(e)
+            if result:
+
+                sources_item.last_modified = update_time_timezone(timezone.localtime())
+
+            sources_item.taken = 0
             sources_item.save()
-            attempt = 0
-            while not result and attempt < 10:
-                result = parsing_username(sources_item.data, parsing_to)
-                attempt += 1
-        except Exception as e:
-            print(e)
-        if result:
-
-            sources_item.last_modified = update_time_timezone(timezone.localtime())
-
-        sources_item.taken = 9
-        sources_item.save()
