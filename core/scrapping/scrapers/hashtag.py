@@ -37,7 +37,7 @@ async def parsing_by_hashtag(url, proxy):
 
         page.on("response",
                 lambda req: asyncio.ensure_future(get_headers(req, body, url)))
-
+        print(url)
         await page.goto(url, timeout=60_000)
         print("page.goto")
 
