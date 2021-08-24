@@ -19,8 +19,8 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute='*/1')
     },
 
-    # 'start_task_parsing_accounts': {
-    #     'task': 'tiktok.tasks.start_task_parsing_accounts',
-    #     'schedule': crontab(minute='*/9')
-    # },
+    'start_task_parsing_accounts': {
+        'task': 'tiktok.tasks.start_task_parsing_accounts',
+        'schedule': crontab(minute='*/1')
+    },
 }
