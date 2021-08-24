@@ -30,6 +30,7 @@ async def parsing_by_hashtag(url, proxy):
                 lambda req: asyncio.ensure_future(get_headers(req, body, url)))
 
         await page.goto(url)
+        print("page.goto")
 
         try:
             await page.waitForSelector("[role='dialog'", timeout=CAPTCHA_TIMEOUT)
