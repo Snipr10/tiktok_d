@@ -74,6 +74,8 @@ def start_task_parsing_accounts():
     print(2)
 
     if sources_item:
+        print(2.5)
+
         time = select_sources.get(id=sources_item.source_id).sources
         print(3)
 
