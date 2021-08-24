@@ -31,7 +31,7 @@ def start_task_parsing_hashtags():
                                       id__in=list(key_source.values_list('keyword_id', flat=True))
                                       ).order_by('last_modified').last()
     print("3")
-
+    print("key_word" + str(key_word))
     if key_word:
         select_source = select_sources.get(id=key_source.filter(keyword_id=key_word.id).first().source_id)
         print("4")
