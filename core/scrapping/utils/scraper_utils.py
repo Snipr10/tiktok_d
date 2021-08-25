@@ -8,6 +8,9 @@ from bs4 import BeautifulSoup
 async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scroll=0):
     while True:
         print("scroll_tiktok")
+        print("round_scroll: " + str(round_scroll))
+        if round_scroll > 50:
+            break
         await asyncio.sleep(1)
         await page.evaluate("""{window.scrollBy(0, document.body.scrollHeight);}""")
         if count >= body.__len__():
@@ -16,9 +19,7 @@ async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scr
             count = body.__len__()
             attempt = 0
         round_scroll += 1
-        print("round_scroll: " + str(round_scroll))
-        if round_scroll > 50:
-            break
+
     # check data
     if parsing_to is not None and datetime.fromtimestamp(body[-1]['createTime']).date() < parsing_to:
         return
