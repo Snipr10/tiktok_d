@@ -14,7 +14,7 @@ def parsing_username(username, parsing_to=None):
         return None
     print("start")
     try:
-        result = loop.run_until_complete(asyncio.wait_for(parsing_account(url, proxy_data, parsing_to), 30000))
+        result = loop.run_until_complete(asyncio.wait_for(parsing_account(url, proxy_data, parsing_to), 300_000))
     except Exception as e:
         print(e)
         stop_proxy(proxy, banned=1)

@@ -12,7 +12,7 @@ def parsing_hashtag(hashtag):
     if proxy is None:
         return None
     try:
-        result = loop.run_until_complete(asyncio.wait_for(parsing_by_hashtag(url, proxy_data), 30000))
+        result = loop.run_until_complete(asyncio.wait_for(parsing_by_hashtag(url, proxy_data), 300_000))
     except Exception as e:
         print(e)
         stop_proxy(proxy, banned=1)
