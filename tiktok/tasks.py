@@ -81,7 +81,6 @@ def start_task_parsing_accounts():
     else:
 
         print(1.3)
-        print(sources_items.id)
         print(1.31)
 
         sources_item = sources_items.order_by('last_modified').last()
