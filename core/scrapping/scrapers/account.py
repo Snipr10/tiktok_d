@@ -33,5 +33,9 @@ async def parsing_account(url, proxy, parsing_to):
             return AccountResult(success=False, captcha=True)
         except Exception:
             pass
+        if len(body) ==0:
+            # BAD Res
+            return AccountResult(success=False, captcha=True)
+
         await scroll_tiktok(len(body), page, body, attempt=0, parsing_to=parsing_to)
         return AccountResult(body=body)
