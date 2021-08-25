@@ -16,6 +16,7 @@ from core.parsing_by_hashtag import parsing_hashtag
 from core.parsing_by_username import parsing_username
 from core.scrapping.scrapers.hashtag import parsing_by_hashtag
 from core.utils.proxy import stop_proxy, get_proxies
+from core.utils.save_json_to_db import save
 from core.utils.utils import update_time_timezone
 
 
