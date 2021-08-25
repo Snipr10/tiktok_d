@@ -76,8 +76,11 @@ def start_task_parsing_accounts():
     null_sources_items = sources_items.filter(last_modified__isnull=True)
     print(1.1)
     if len(null_sources_items) > 0:
+        print(1.2)
         sources_item = null_sources_items.first()
     else:
+        print(1.3)
+
         sources_item = sources_items.order_by('last_modified').last()
     print(2)
 
