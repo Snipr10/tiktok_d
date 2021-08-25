@@ -29,7 +29,7 @@ def start_task_parsing_hashtags():
 
     key_word = Keyword.objects.filter(network_id=9, enabled=1, taken=0,
                                       id__in=list(key_source.values_list('keyword_id', flat=True))
-                                      ).order_by('last_modified').last()
+                                      ).order_by('last_modified').first()
     print("3")
     print("key_word" + str(key_word))
     if key_word:
