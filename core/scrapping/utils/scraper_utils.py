@@ -9,7 +9,7 @@ async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scr
     while True:
         print("scroll_tiktok")
         print("round_scroll: " + str(round_scroll))
-        if round_scroll > 10:
+        if round_scroll > 50:
             break
         await asyncio.sleep(1)
         await page.evaluate("""{window.scrollBy(0, document.body.scrollHeight);}""")
