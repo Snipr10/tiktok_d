@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+import django.db
 
 from django.shortcuts import render
 import datetime
@@ -61,9 +62,11 @@ def test(request):
     print(3)
 
     try:
-        result = loop.run_until_complete(asyncio.wait_for(parsing_by_hashtag(url, proxies), 30000))
+        result = loop.run_until_complete(asyncio.wait_for(parsing_by_hashtag(url, proxies), 300_000))
+        django.db.close_old_connections()
     except Exception as e:
         print(e)
+        django.db.close_old_connections()
         stop_proxy(proxy, banned=1)
         return False
     stop_proxy(proxy, result.captcha)
@@ -71,4 +74,6 @@ def test(request):
 
     if not result.success:
         return False
+    save(result.body)
+
     return Response("Ok")
