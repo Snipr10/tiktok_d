@@ -15,14 +15,17 @@ async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scr
         else:
             count = body.__len__()
             attempt = 0
+        round_scroll += 1
+        if round_scroll > 50:
+            print("round_scroll: " + str(round_scroll))
+            break
     # check data
     if parsing_to is not None and datetime.fromtimestamp(body[-1]['createTime']).date() < parsing_to:
         return
 
-    if attempt < 2 or round_scroll < 50:
-        print("round_scroll: " + str(round_scroll))
+    if attempt < 2:
         await asyncio.sleep(5)
-        await scroll_tiktok(count, page, body, attempt=attempt+1, round_scroll=round_scroll+1)
+        await scroll_tiktok(count, page, body, attempt=attempt+1, round_scroll=round_scroll)
     return
 
 
