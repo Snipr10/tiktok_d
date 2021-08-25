@@ -72,8 +72,9 @@ def start_task_parsing_accounts():
     # network_id
     print(1)
     sources_items = SourcesItems.objects.filter(network_id=9, disabled=0, taken=0,
-                                               source_id__in=list(select_sources.values_list('id', flat=True)))
+                                                source_id__in=list(select_sources.values_list('id', flat=True)))
     null_sources_items = sources_items.filter(last_modified__isnull=True)
+    print(1.1)
     if len(null_sources_items) > 0:
         sources_item = null_sources_items.first()
     else:
@@ -90,7 +91,7 @@ def start_task_parsing_accounts():
 
         if time is None:
             time = 0
-        print(sources_item.last_modified )
+        print(sources_item.last_modified)
         if sources_item.last_modified is None or (
                 sources_item.last_modified + datetime.timedelta(minutes=time) <
                 update_time_timezone(timezone.localtime())):
@@ -119,7 +120,6 @@ def start_task_parsing_accounts():
             except Exception as e:
                 print(e)
             if result:
-
                 sources_item.last_modified = update_time_timezone(timezone.localtime())
 
             sources_item.taken = 0
