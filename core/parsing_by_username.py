@@ -21,10 +21,8 @@ def parsing_username(username, parsing_to=None):
         return False
 
     stop_proxy(proxy, result.captcha)
+    save(result.body)
 
     if not result.success:
         return False
-
-    save(result.body)
-
     return True
