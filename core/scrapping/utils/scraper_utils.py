@@ -5,7 +5,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 
-async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None):
+async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scroll=0):
     while True:
         print("scroll_tiktok")
         await asyncio.sleep(1)
@@ -19,9 +19,10 @@ async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None):
     if parsing_to is not None and datetime.fromtimestamp(body[-1]['createTime']).date() < parsing_to:
         return
 
-    if attempt < 2:
+    if attempt < 2 or round_scroll < 50:
+        print("round_scroll: " + str(round_scroll))
         await asyncio.sleep(5)
-        await scroll_tiktok(count, page, body, attempt+1)
+        await scroll_tiktok(count, page, body, attempt=attempt+1, round_scroll=round_scroll+1)
     return
 
 
