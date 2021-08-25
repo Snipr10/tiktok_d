@@ -49,8 +49,10 @@ async def parsing_by_hashtag(url, proxy):
         if len(body) ==0:
             # BAD Res
             return AccountResult(success=False, captcha=True)
-
-        await scroll_tiktok(len(body), page, body, attempt=0)
-
+        try:
+            await scroll_tiktok(len(body), page, body, attempt=0)
+        except Exception as e:
+            print(e)
+        print(body)
         # cookies = await get_cookies(page)
         return AccountResult(body=body)
