@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None):
     while True:
+        print("scroll_tiktok")
         await asyncio.sleep(1)
         await page.evaluate("""{window.scrollBy(0, document.body.scrollHeight);}""")
         if count >= body.__len__():
