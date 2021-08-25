@@ -79,8 +79,10 @@ def start_task_parsing_accounts():
         print(1.2)
         sources_item = null_sources_items.first()
     else:
+
         print(1.3)
-        print(sources_items)
+        print(sources_items.id)
+        print(1.31)
 
         sources_item = sources_items.order_by('last_modified').last()
     print(2)
