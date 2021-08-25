@@ -40,7 +40,9 @@ async def parsing_by_hashtag(url, proxy):
         print(url)
         await page.goto(url, timeout=60_000)
         print("page.goto")
-
+        page_content = await page.content()
+        if "Хэштег не найден" in page_content:
+            return AccountResult(not_founded=True)
         try:
             await page.waitForSelector("[role='dialog'", timeout=CAPTCHA_TIMEOUT)
             return AccountResult(success=False, captcha=True)

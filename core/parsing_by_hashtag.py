@@ -18,7 +18,6 @@ def parsing_hashtag(hashtag):
         stop_proxy(proxy, banned=1)
         return False
     stop_proxy(proxy, result.captcha)
-
     if not result.success:
         return False
 
