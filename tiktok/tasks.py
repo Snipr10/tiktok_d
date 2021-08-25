@@ -42,6 +42,8 @@ def start_task_parsing_hashtags():
             time = 0
         if last_update is None or (last_update + datetime.timedelta(minutes=time) <
                                    update_time_timezone(timezone.localtime())):
+            print("5")
+
             result = False
             try:
                 key_word.taken = 1
