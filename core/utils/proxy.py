@@ -32,7 +32,11 @@ def get_proxy():
                                               timezone.localtime()
                                           ) - datetime.timedelta(minutes=5)).order_by('taken', 'last_used').first()
         print(3)
-
+        if used_proxy is None:
+            used_proxy = Proxy.objects.filter(banned=False,
+                                              last_used__lte=update_time_timezone(
+                                                  timezone.localtime()
+                                              ) - datetime.timedelta(minutes=5)).order_by('taken', 'last_used').first()
         if used_proxy is not None:
             used_proxy.taken = True
             used_proxy.save(update_fields=['taken'])
