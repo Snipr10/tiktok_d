@@ -33,6 +33,7 @@ def save(result_posts):
             )
             )
             try:
+                print("save append " + str(post['id']))
                 posts_content.append(PostContent(id=post['id'], description=post.get('desc')))
             except Exception:
                 pass
@@ -80,11 +81,31 @@ def save(result_posts):
                     pass
         except Exception as e:
             print(e)
-
-    Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)
-    PostContent.objects.bulk_create(posts_content, batch_size=batch_size, ignore_conflicts=True)
-    Music.objects.bulk_create(music, batch_size=batch_size, ignore_conflicts=True)
-    PostHashtag.objects.bulk_create(post_hashtag, batch_size=batch_size, ignore_conflicts=True)
-    Hashtag.objects.bulk_create(hashtags, batch_size=batch_size, ignore_conflicts=True)
-    Author.objects.bulk_create(authors, batch_size=batch_size, ignore_conflicts=True)
-    AuthorDescription.objects.bulk_create(authors_description, batch_size=batch_size, ignore_conflicts=True)
+    try:
+        Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save Post :" + str(e))
+    try:
+        PostContent.objects.bulk_create(posts_content, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save PostContent :" + str(e))
+    try:
+        Music.objects.bulk_create(music, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save Music :" + str(e))
+    try:
+        PostHashtag.objects.bulk_create(post_hashtag, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save PostHashtag :" + str(e))
+    try:
+        Hashtag.objects.bulk_create(hashtags, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save Hashtag :" + str(e))
+    try:
+        Author.objects.bulk_create(authors, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save Author :" + str(e))
+    try:
+        AuthorDescription.objects.bulk_create(authors_description, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save AuthorDescription :" + str(e))
