@@ -25,6 +25,7 @@ def start_task_parsing_hashtags():
     key_word = Keyword.objects.filter(network_id=9, enabled=1, taken=0,
                                       id__in=list(key_source.values_list('keyword_id', flat=True))
                                       ).order_by('last_modified').first()
+    print(key_word)
     if key_word:
         select_source = select_sources.get(id=key_source.filter(keyword_id=key_word.id).first().source_id)
         last_update = key_word.last_modified
@@ -64,7 +65,7 @@ def start_task_parsing_accounts():
         sources_item = null_sources_items.first()
     else:
         sources_item = sources_items.order_by('last_modified').first()
-
+    print(sources_item)
     if sources_item:
         time = select_sources.get(id=sources_item.source_id).sources
         if time is None:
