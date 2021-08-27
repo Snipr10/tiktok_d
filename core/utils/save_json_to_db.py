@@ -6,6 +6,7 @@ from tiktok.settings import batch_size
 
 
 def save(result_posts):
+    print("save")
     posts = []
     posts_content = []
     music = []
@@ -14,6 +15,7 @@ def save(result_posts):
     authors = []
     authors_description = []
     for post in result_posts:
+        print("save post" + str(post['id']))
         url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
         posts.append(Post(
             id=post['id'],
