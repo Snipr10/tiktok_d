@@ -17,7 +17,7 @@ logger = logging.getLogger(__file__)
 
 @app.task
 def start_task_parsing_hashtags():
-    print(start_task_parsing_hashtags)
+    print("start_task_parsing_hashtags")
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
@@ -51,7 +51,7 @@ def start_task_parsing_hashtags():
 
 @app.task
 def start_task_parsing_accounts():
-    print(start_task_parsing_accounts)
+    print("start_task_parsing_accounts")
 
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
