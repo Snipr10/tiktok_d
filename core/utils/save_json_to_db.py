@@ -81,6 +81,7 @@ def save(result_posts):
                     pass
         except Exception as e:
             print(e)
+    print(" Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)")
     try:
         Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)
     except Exception as e:
