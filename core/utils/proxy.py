@@ -14,7 +14,6 @@ logger = logging.getLogger(__file__)
 
 def get_proxy():
     try:
-        print(1)
         time.sleep(random.randint(0, 10) / 10)
         added_proxy_list = list(Proxy.objects.all().values_list('id', flat=True))
         print(1.1)
@@ -46,7 +45,7 @@ def get_proxy():
                 used_proxy.save(update_fields=['banned'])
                 return get_proxy()
             else:
-                return used_proxy, used_proxy
+                return used_proxy, proxies
         return None, None
     except Exception as e:
         logger.error(e)
