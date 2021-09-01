@@ -6,7 +6,7 @@ from core.utils.save_json_to_db import save
 
 
 def parsing_hashtag(hashtag):
-    url = f"https://www.tiktok.com/tag/{hashtag}"
+    url = f"https://www.tiktok.com/tag/{hashtag.replace(' ', '')}"
     loop = asyncio.new_event_loop()
     proxy, proxy_data = get_proxy()
     if proxy is None:
