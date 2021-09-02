@@ -33,6 +33,25 @@ def save(result_posts):
                     comments=post.get('stats', {}).get('commentCount')
                 )
                 )
+                print("try save post")
+                try:
+                    print("try save post" + post['id'])
+                    Post.objects.create(
+                        id=post['id'],
+                        user_id=post.get('author', {}).get('id'),
+                        music_id=post.get('music', {}).get('id'),
+                        created_date=datetime.datetime.fromtimestamp(post['createTime']),
+                        url=url,
+                        likes=post.get('stats', {}).get('diggCount'),
+                        reposts=post.get('stats', {}).get('shareCount'),
+                        viewed=post.get('stats', {}).get('playCount'),
+                        sphinx_id=get_sphinx_id(url),
+                        content_hash=get_md5_text(post.get('desc')),
+                        comments=post.get('stats', {}).get('commentCount')
+                    )
+                except Exception as e:
+                    print("try save post " + str(e))
+
                 try:
                     print("save append " + str(post['id']))
                     posts_content.append(PostContent(id=post['id'], description=post.get('desc')))
@@ -40,7 +59,8 @@ def save(result_posts):
                     pass
                 try:
                     music.append(
-                        Music(id=post['music']['id'], author_nickname=post.get('music', {}).get('authorName'), title=post['music']['title'])
+                        Music(id=post['music']['id'], author_nickname=post.get('music', {}).get('authorName'),
+                              title=post['music']['title'])
                     )
                 except Exception:
                     pass
@@ -85,6 +105,7 @@ def save(result_posts):
     except Exception as e:
         print(e)
     print(" Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)")
+
     try:
         Post.objects.bulk_create(posts, batch_size=batch_size, ignore_conflicts=True)
     except Exception as e:
