@@ -14,6 +14,7 @@ def save(result_posts):
     post_hashtag = []
     authors = []
     authors_description = []
+    s = 0
     try:
         for post in result_posts:
             try:
@@ -22,6 +23,8 @@ def save(result_posts):
                     music_id = None
                 print("save post" + str(post['id']))
                 url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
+                print(s)
+                s += 1
                 posts.append(Post(
                     id=post['id'],
                     user_id=post.get('author', {}).get('id'),
@@ -36,27 +39,27 @@ def save(result_posts):
                     comments=post.get('stats', {}).get('commentCount')
                 )
                 )
-                print("try save post")
-                try:
-                    print("try save post" + post['id'])
-                    music_id = post.get('music', {}).get('id')
-                    if music_id == "":
-                        music_id = None
-                    Post.objects.create(
-                        id=post['id'],
-                        user_id=post.get('author', {}).get('id'),
-                        music_id=music_id,
-                        created_date=datetime.datetime.fromtimestamp(post['createTime']),
-                        url=url,
-                        likes=post.get('stats', {}).get('diggCount'),
-                        reposts=post.get('stats', {}).get('shareCount'),
-                        viewed=post.get('stats', {}).get('playCount'),
-                        sphinx_id=get_sphinx_id(url),
-                        content_hash=get_md5_text(post.get('desc')),
-                        comments=post.get('stats', {}).get('commentCount')
-                    )
-                except Exception as e:
-                    print("try save post " + str(e))
+                # print("try save post")
+                # try:
+                #     print("try save post" + post['id'])
+                #     music_id = post.get('music', {}).get('id')
+                #     if music_id == "":
+                #         music_id = None
+                #     Post.objects.create(
+                #         id=post['id'],
+                #         user_id=post.get('author', {}).get('id'),
+                #         music_id=music_id,
+                #         created_date=datetime.datetime.fromtimestamp(post['createTime']),
+                #         url=url,
+                #         likes=post.get('stats', {}).get('diggCount'),
+                #         reposts=post.get('stats', {}).get('shareCount'),
+                #         viewed=post.get('stats', {}).get('playCount'),
+                #         sphinx_id=get_sphinx_id(url),
+                #         content_hash=get_md5_text(post.get('desc')),
+                #         comments=post.get('stats', {}).get('commentCount')
+                #     )
+                # except Exception as e:
+                #     print("try save post " + str(e))
 
                 try:
                     print("save append " + str(post['id']))
