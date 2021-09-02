@@ -52,7 +52,9 @@ async def parsing_by_hashtag(url, proxy):
         if len(body) == 0:
             # BAD Res
             print("BAD captcha")
-            return AccountResult(success=False, captcha=True)
+            return AccountResult(body=body)
+
+            # return AccountResult(success=False, captcha=True)
         try:
             await scroll_tiktok(len(body), page, body, attempt=0)
         except Exception as e:
