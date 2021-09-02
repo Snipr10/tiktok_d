@@ -17,12 +17,15 @@ def save(result_posts):
     try:
         for post in result_posts:
             try:
+                music_id = post.get('music', {}).get('id')
+                if music_id =="":
+                    music_id = None
                 print("save post" + str(post['id']))
                 url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
                 posts.append(Post(
                     id=post['id'],
                     user_id=post.get('author', {}).get('id'),
-                    music_id=post.get('music', {}).get('id'),
+                    music_id=music_id,
                     created_date=datetime.datetime.fromtimestamp(post['createTime']),
                     url=url,
                     likes=post.get('stats', {}).get('diggCount'),
@@ -36,10 +39,13 @@ def save(result_posts):
                 print("try save post")
                 try:
                     print("try save post" + post['id'])
+                    music_id = post.get('music', {}).get('id')
+                    if music_id == "":
+                        music_id = None
                     Post.objects.create(
                         id=post['id'],
                         user_id=post.get('author', {}).get('id'),
-                        music_id=post.get('music', {}).get('id'),
+                        music_id=music_id,
                         created_date=datetime.datetime.fromtimestamp(post['createTime']),
                         url=url,
                         likes=post.get('stats', {}).get('diggCount'),
