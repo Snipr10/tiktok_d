@@ -64,10 +64,11 @@ def save(result_posts):
                 except Exception:
                     pass
                 try:
-                    music.append(
-                        Music(id=post['music']['id'], author_nickname=post.get('music', {}).get('authorName'),
-                              title=post['music']['title'])
-                    )
+                    if post['music']['id']:
+                        music.append(
+                            Music(id=post['music']['id'], author_nickname=post.get('music', {}).get('authorName'),
+                                  title=post['music']['title'])
+                        )
                 except Exception:
                     pass
                 try:
