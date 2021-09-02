@@ -45,11 +45,13 @@ async def parsing_by_hashtag(url, proxy):
         #     return AccountResult(not_founded=True)
         try:
             await page.waitForSelector("[role='dialog'", timeout=CAPTCHA_TIMEOUT)
+            print("captcha")
             return AccountResult(success=False, captcha=True)
         except Exception:
             pass
         if len(body) == 0:
             # BAD Res
+            print("BAD captcha")
             return AccountResult(success=False, captcha=True)
         try:
             await scroll_tiktok(len(body), page, body, attempt=0)
