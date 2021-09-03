@@ -78,8 +78,10 @@ def start_task_parsing_accounts():
     pool_source = ThreadPoolExecutor(3)
     iteration = 0
     futures = []
-
+    print(1)
     for sources_item in sources_items:
+        print("sources_item")
+        print(sources_item)
         try:
             if iteration > MAX_SIZE_PARSE_IN_CHANNEL or \
                     SourcesItems.objects.filter(network_id=8, disabled=0, taken=1,
