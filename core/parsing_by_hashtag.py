@@ -30,7 +30,7 @@ def parsing_hashtag(key_word):
     except Exception:
         is_success = False
 
-    key_word.taken = 1
+    key_word.taken = 0
 
     if is_success:
         key_word.last_modified = update_time_timezone(timezone.localtime())

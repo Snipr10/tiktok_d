@@ -27,8 +27,8 @@ def start_task_parsing_hashtags():
         status=1)
     key_source = KeywordSource.objects.filter(source_id__in=list(select_sources.values_list('id', flat=True)))
     key_words = Keyword.objects.filter(network_id=9, enabled=1, taken=0,
-                                      id__in=list(key_source.values_list('keyword_id', flat=True))
-                                      ).order_by('last_modified')
+                                       id__in=list(key_source.values_list('keyword_id', flat=True))
+                                       ).order_by('last_modified')
 
     iteration = 0
     for key_word in key_words:
@@ -95,7 +95,6 @@ def start_task_parsing_accounts():
                 sources_item.save()
                 attempt = 0
                 while not result and attempt < 10:
-
                     result = parsing_username(sources_item.data, parsing_to)
 
                     attempt += 1
