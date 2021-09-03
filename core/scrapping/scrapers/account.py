@@ -19,13 +19,18 @@ async def parsing_account(url, proxy, parsing_to):
         await page._client.send('Network.setCookies', {
             'cookies': generate_cookie(),
         })
+        print("authenticate")
+
         await page.authenticate({'username': proxy.login, 'password': proxy.proxy_password})
+        print("USER_AGENT")
 
         await page.setUserAgent(USER_AGENT)
         body = []
+        print("response")
 
         page.on("response",
                 lambda req: asyncio.ensure_future(get_headers(req, body, url)))
+        print(url)
         await page.goto(url)
 
         try:
