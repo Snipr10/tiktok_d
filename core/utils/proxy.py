@@ -53,12 +53,14 @@ def get_proxy():
 
 
 def stop_proxy(proxy, captcha=0, banned=0):
-    proxy.captcha = captcha
-    proxy.taken = 0
-    proxy.banned = banned
-    proxy.last_used = update_time_timezone(timezone.localtime())
-    proxy.save()
-
+    try:
+        proxy.captcha = captcha
+        proxy.taken = 0
+        proxy.banned = banned
+        proxy.last_used = update_time_timezone(timezone.localtime())
+        proxy.save()
+    except Exception:
+        pass
 
 def get_proxies(proxy):
     proxy_info = AllProxy.objects.filter(id=proxy.id).first()
