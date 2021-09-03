@@ -44,7 +44,6 @@ class BrowserManager:
     async def __aexit__(self, type, value, traceback):
         if self.browser:
             await self.browser.close()
-            revert_to_original_chromium_version()
 
 
 def to_curl(req):
