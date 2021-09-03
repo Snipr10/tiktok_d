@@ -15,7 +15,7 @@ class User(AbstractUser):
 class UpdateIndex(models.Model):
     created_date = models.DateField(default=datetime.min)
     owner_id = models.IntegerField()
-    network_id = models.IntegerField(default=8)
+    network_id = models.IntegerField(default=9)
     sphinx_id = models.CharField(max_length=127)
 
     class Meta:

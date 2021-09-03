@@ -1,8 +1,9 @@
 import datetime
 
-from core.models import Author, AuthorDescription, Music, Post, PostContent, Hashtag, PostHashtag
-from core.utils.utils import get_sphinx_id, get_md5_text
+from core.models import Author, AuthorDescription, Music, Post, PostContent, Hashtag, PostHashtag, UpdateIndex
+from core.utils.utils import get_sphinx_id, get_md5_text, update_time_timezone
 from tiktok.settings import batch_size
+from django.utils import timezone
 
 
 def save(result_posts):
@@ -14,53 +15,42 @@ def save(result_posts):
     post_hashtag = []
     authors = []
     authors_description = []
-    s = 0
+    updates = []
     try:
         for post in result_posts:
             try:
                 music_id = post.get('music', {}).get('id')
-                if music_id =="":
+                if music_id == "":
                     music_id = None
-                print("save post" + str(post['id']))
                 url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
-                print(s)
-                s += 1
+                post_id = post['id']
+                owner_id = post.get('author', {}).get('id')
+                sphinx_id = get_sphinx_id(url)
                 posts.append(Post(
-                    id=post['id'],
-                    user_id=post.get('author', {}).get('id'),
+                    id=post_id,
+                    user_id=owner_id,
                     music_id=music_id,
                     created_date=datetime.datetime.fromtimestamp(post['createTime']),
                     url=url,
                     likes=post.get('stats', {}).get('diggCount'),
                     reposts=post.get('stats', {}).get('shareCount'),
                     viewed=post.get('stats', {}).get('playCount'),
-                    sphinx_id=get_sphinx_id(url),
+                    sphinx_id=sphinx_id,
                     content_hash=get_md5_text(post.get('desc')),
                     comments=post.get('stats', {}).get('commentCount')
                 )
                 )
-                # print("try save post")
-                # try:
-                #     print("try save post" + post['id'])
-                #     music_id = post.get('music', {}).get('id')
-                #     if music_id == "":
-                #         music_id = None
-                #     Post.objects.create(
-                #         id=post['id'],
-                #         user_id=post.get('author', {}).get('id'),
-                #         music_id=music_id,
-                #         created_date=datetime.datetime.fromtimestamp(post['createTime']),
-                #         url=url,
-                #         likes=post.get('stats', {}).get('diggCount'),
-                #         reposts=post.get('stats', {}).get('shareCount'),
-                #         viewed=post.get('stats', {}).get('playCount'),
-                #         sphinx_id=get_sphinx_id(url),
-                #         content_hash=get_md5_text(post.get('desc')),
-                #         comments=post.get('stats', {}).get('commentCount')
-                #     )
-                # except Exception as e:
-                #     print("try save post " + str(e))
-
+                try:
+                    updates.append(
+                        UpdateIndex(
+                            id=post_id,
+                            owner_id=owner_id,
+                            sphinx_id=sphinx_id,
+                            created_date=update_time_timezone(timezone.now())
+                        )
+                    )
+                except Exception:
+                    pass
                 try:
                     print("save append " + str(post['id']))
                     posts_content.append(PostContent(id=post['id'], description=post.get('desc')))
@@ -144,3 +134,7 @@ def save(result_posts):
         AuthorDescription.objects.bulk_create(authors_description, batch_size=batch_size, ignore_conflicts=True)
     except Exception as e:
         print("save AuthorDescription :" + str(e))
+    try:
+        UpdateIndex.objects.bulk_create(updates, batch_size=batch_size, ignore_conflicts=True)
+    except Exception as e:
+        print("save UpdateIndex :" + str(e))
