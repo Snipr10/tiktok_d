@@ -45,6 +45,8 @@ def start_task_parsing_hashtags():
                 if last_update is None or (last_update + datetime.timedelta(minutes=time) <
                                            update_time_timezone(timezone.localtime())):
                     try:
+                        key_word.taken = 1
+                        key_word.save(update_fields=["taken"])
                         futures.append(
                             pool_source.submit(parsing_hashtag, key_word))
                     except Exception as e:

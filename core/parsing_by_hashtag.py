@@ -12,7 +12,7 @@ def parsing_hashtag(key_word):
     loop = asyncio.new_event_loop()
     proxy, proxy_data = get_proxy()
     if proxy is None:
-        key_word.taken = 1
+        key_word.taken = 0
         key_word.save(update_fields=["taken"])
         return None
     is_success = True
