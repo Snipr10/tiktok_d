@@ -12,7 +12,7 @@ def parsing_hashtag(key_word):
     loop = asyncio.new_event_loop()
     proxy, proxy_data = get_proxy()
     if proxy is None:
-        key_word.taken = 0
+        key_word.taken = 1
         key_word.save(update_fields=["taken"])
         return None
     is_success = True
@@ -25,8 +25,13 @@ def parsing_hashtag(key_word):
     stop_proxy(proxy, result.captcha)
     if not result.success:
         is_success = False
+    try:
+        save(result.body)
+    except Exception:
+        is_success = False
 
-    save(result.body)
+    key_word.taken = 1
+
     if is_success:
         key_word.last_modified = update_time_timezone(timezone.localtime())
         key_word.save(update_fields=["taken", "last_modified"])
