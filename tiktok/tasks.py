@@ -88,6 +88,7 @@ def start_task_parsing_accounts():
                                                 source_id__in=list(select_sources.values_list('id', flat=True))
                                                 ).count() > MAX_SIZE_PARSE_IN_CHANNEL:
                 break
+            print("time")
 
             time = select_sources.get(id=sources_item.source_id).sources
             if time is None:
@@ -99,11 +100,15 @@ def start_task_parsing_accounts():
                 retro_date = select_sources.get(id=sources_item.source_id).retro
                 last_update = sources_item.last_modified
                 parsing_to = retro_date
+                print("update_fields")
+
                 try:
                     if not sources_item.foced and last_update is not None:
                         parsing_to = last_update.date()
                 except Exception:
                     pass
+                print("update_fields")
+
                 result = False
                 try:
                     print("update_fields")
