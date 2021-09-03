@@ -33,12 +33,17 @@ async def parsing_account(url, proxy, parsing_to):
             return AccountResult(success=False, captcha=True)
         except Exception:
             pass
+        print("NOT CAPTHCA")
         if len(body) ==0:
             # BAD Res
-            return AccountResult(success=False, captcha=True)
+            print("body 0")
+            return AccountResult(body=body)
         try:
+            print("scroll_tiktok 0")
+
             await scroll_tiktok(len(body), page, body, attempt=0, parsing_to=parsing_to)
         except Exception as e:
             print(e)
         print(body)
+
         return AccountResult(body=body)
