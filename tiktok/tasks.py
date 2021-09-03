@@ -106,6 +106,7 @@ def start_task_parsing_accounts():
                     pass
                 result = False
                 try:
+                    print("update_fields")
                     sources_item.taken = 1
                     sources_item.save(update_fields=["taken"])
                     futures.append(
