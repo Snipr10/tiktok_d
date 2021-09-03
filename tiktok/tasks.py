@@ -47,7 +47,9 @@ def start_task_parsing_hashtags():
             key_word.taken = 0
             if result:
                 key_word.last_modified = update_time_timezone(timezone.localtime())
-            key_word.save()
+                key_word.save(update_fields=["taken", "last_modified"])
+            else:
+                key_word.save(update_fields=["taken"])
 
 
 @app.task
@@ -96,6 +98,6 @@ def start_task_parsing_accounts():
                 print(e)
             if result:
                 sources_item.last_modified = update_time_timezone(timezone.localtime())
-
-            sources_item.taken = 0
-            sources_item.save()
+                sources_item.save(update_fields=["taken", "last_modified"])
+            else:
+                sources_item.save(update_fields=["taken"])
