@@ -31,15 +31,18 @@ async def scroll_tiktok(count, page, body, attempt=0, parsing_to=None, round_scr
 
 
 async def get_headers(response, body, url):
-    if url in response.url:
-        text = await response.text()
-        soup = BeautifulSoup(text)
-        json_text = soup.find(id='__NEXT_DATA__').contents[0]
-        data = json.loads(json_text)
-        body += data['props']['pageProps']['items']
-    if "https://m.tiktok.com/api/post/item_list" in response.url or "https://m.tiktok.com/api/challenge/item_list/"in response.url:
-        try:
-            items = await response.json()
-            body += items['itemList']
-        except Exception as e:
-            print(e)
+    try:
+        if url in response.url:
+            text = await response.text()
+            soup = BeautifulSoup(text)
+            json_text = soup.find(id='__NEXT_DATA__').contents[0]
+            data = json.loads(json_text)
+            body += data['props']['pageProps']['items']
+        if "https://m.tiktok.com/api/post/item_list" in response.url or "https://m.tiktok.com/api/challenge/item_list/"in response.url:
+            try:
+                items = await response.json()
+                body += items['itemList']
+            except Exception as e:
+                print(e)
+    except Exception as e:
+        print(e)
