@@ -26,6 +26,7 @@ def start_task_webhook():
     for key in key_words:
         key.taken = 0
         key.save()
+    session.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7")
 
 @app.task
 def start_task_parsing_hashtags():
