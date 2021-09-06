@@ -16,7 +16,7 @@ app.conf.beat_schedule = {
 
     'start_task_parsing_hashtags': {
         'task': 'tiktok.tasks.start_task_parsing_hashtags',
-        'schedule': crontab(minute='*/5')
+        'schedule': crontab(minute='*/1')
     },
 
     'start_task_parsing_accounts': {
