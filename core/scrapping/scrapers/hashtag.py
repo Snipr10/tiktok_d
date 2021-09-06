@@ -1,5 +1,7 @@
 import asyncio
 
+import requests
+
 from core.scrapping.models import AccountResult
 from core.scrapping.scraper import BrowserManager
 from core.scrapping.utils.scraper_utils import get_headers, scroll_tiktok
@@ -12,8 +14,11 @@ CHROME_REVISION = '884014'
 
 
 async def parsing_by_hashtag(url, proxy):
+    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?url_parsing_by_hashtag")
+
     async with BrowserManager(proxy) as browser_manager:
-        print("BrowserManager")
+        requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?BrowserManager")
+
         browser = browser_manager.browser
         print("browser")
 
