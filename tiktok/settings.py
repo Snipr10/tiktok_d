@@ -142,7 +142,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # CELERY
-BROKER_URL = 'redis://127.0.0.1:6379/0'
+# BROKER_URL = 'redis://127.0.0.1:6379/0'
+BROKER_URL = "redis://redis:6379"
+BROKER_URL_BACKEND = "redis://redis:6379"
+
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

@@ -3,19 +3,25 @@ import logging
 from concurrent.futures.thread import ThreadPoolExecutor
 import datetime
 
+import requests
 from django.db.models import Q
 
 from core.models import Sources, KeywordSource, Keyword, SourcesItems
 from core.parsing_by_hashtag import parsing_hashtag
 from core.parsing_by_username import parsing_username
 from core.utils.utils import update_time_timezone
-from tiktok.celery.celery import app
+from core.celery import app
 from django.utils import timezone
 
 logger = logging.getLogger(__file__)
 
 MAX_SIZE_PARSE_BY_WORD = 5
 MAX_SIZE_PARSE_IN_CHANNEL = 4
+
+@app.task
+def start_task_webhook():
+    session = requests.session()
+    session.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7")
 
 @app.task
 def start_task_parsing_hashtags():
