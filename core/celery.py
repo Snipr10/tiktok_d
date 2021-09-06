@@ -25,6 +25,6 @@ app.conf.beat_schedule = {
     },
     'start_task_webhook': {
         'task': 'tiktok.tasks.start_task_webhook',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*/50')
     },
 }
