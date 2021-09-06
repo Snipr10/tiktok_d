@@ -24,6 +24,7 @@ async def parsing_by_hashtag(url, proxy):
 
         page = await browser.newPage()
         print("page")
+        requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?page")
 
         await page.evaluateOnNewDocument(
             """() => {
@@ -37,6 +38,8 @@ async def parsing_by_hashtag(url, proxy):
 
         await page.authenticate({'username': proxy.login, 'password': proxy.proxy_password})
         print("authenticate")
+        requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?authenticate")
+        requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?{proxy.login}")
 
         body = []
 
@@ -45,7 +48,9 @@ async def parsing_by_hashtag(url, proxy):
         print(url)
         await page.goto(url, timeout=60_000)
         print("page.goto")
-        page_content = await page.content()
+        requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?page_goto")
+
+        # page_content = await page.content()
         # if "Хэштег не найден" in page_content:
         #     return AccountResult(not_founded=True)
         try:
