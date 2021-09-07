@@ -86,12 +86,7 @@ def start_task_parsing_accounts():
     pool_source = ThreadPoolExecutor(3)
     iteration = 0
     futures = []
-    print(1)
     for sources_item in sources_items:
-        print("sources_item")
-        print(sources_item)
-        requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?sources_item={sources_item.id}")
-
         try:
             if iteration > MAX_SIZE_PARSE_IN_CHANNEL or \
                     SourcesItems.objects.filter(network_id=9, disabled=0, taken=1,
@@ -103,13 +98,11 @@ def start_task_parsing_accounts():
             time = select_sources.get(id=sources_item.source_id).sources
             if time is None:
                 time = 0
-            requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?time={time}")
 
             if sources_item.last_modified is None or (
                     sources_item.last_modified + datetime.timedelta(minutes=time) <
                     update_time_timezone(timezone.localtime())):
 
-                requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?retro_date=")
 
                 retro_date = select_sources.get(id=sources_item.source_id).retro
                 last_update = sources_item.last_modified
