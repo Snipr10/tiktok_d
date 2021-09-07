@@ -103,9 +103,13 @@ def start_task_parsing_accounts():
             time = select_sources.get(id=sources_item.source_id).sources
             if time is None:
                 time = 0
+            requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?time={time}")
+
             if sources_item.last_modified is None or (
                     sources_item.last_modified + datetime.timedelta(minutes=time) <
                     update_time_timezone(timezone.localtime())):
+
+                requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?retro_date=")
 
                 retro_date = select_sources.get(id=sources_item.source_id).retro
                 last_update = sources_item.last_modified
