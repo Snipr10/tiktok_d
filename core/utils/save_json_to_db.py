@@ -1,5 +1,7 @@
 import datetime
 
+import requests
+
 from core.models import Author, AuthorDescription, Music, Post, PostContent, Hashtag, PostHashtag, UpdateIndex
 from core.utils.utils import get_sphinx_id, get_md5_text, update_time_timezone
 from tiktok.settings import batch_size
@@ -19,6 +21,25 @@ def save(result_posts):
     try:
         for post in result_posts:
             try:
+                try:
+                    url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
+
+                    Post.objects.save(
+                        id=post['id'],
+                        user_id=post.get('author', {}).get('id'),
+                        music_id=post.get('music', {}).get('id'),
+                        created_date=datetime.datetime.fromtimestamp(post['createTime']),
+                        url=f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}",
+                        likes=post.get('stats', {}).get('diggCount'),
+                        reposts=post.get('stats', {}).get('shareCount'),
+                        viewed=post.get('stats', {}).get('playCount'),
+                        sphinx_id=get_sphinx_id(url),
+                        content_hash=get_md5_text(post.get('desc')),
+                        comments=post.get('stats', {}).get('commentCount')
+                    )
+                except Exception as e:
+                    requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?{str(e)}")
+
                 music_id = post.get('music', {}).get('id')
                 if music_id == "":
                     music_id = None
@@ -26,6 +47,7 @@ def save(result_posts):
                 post_id = post['id']
                 owner_id = post.get('author', {}).get('id')
                 sphinx_id = get_sphinx_id(url)
+
                 posts.append(Post(
                     id=post_id,
                     user_id=owner_id,
