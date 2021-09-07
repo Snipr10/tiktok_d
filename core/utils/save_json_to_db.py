@@ -24,7 +24,7 @@ def save(result_posts):
                 try:
                     url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
 
-                    Post.objects.save(
+                    Post.objects.create(
                         id=post['id'],
                         user_id=post.get('author', {}).get('id'),
                         music_id=post.get('music', {}).get('id'),
