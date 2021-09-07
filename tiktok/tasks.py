@@ -69,6 +69,7 @@ def start_task_parsing_hashtags():
 @app.task
 def start_task_parsing_accounts():
     print("start_task_parsing_accounts")
+    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?start_task_parsing_accounts")
 
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
@@ -89,6 +90,8 @@ def start_task_parsing_accounts():
     for sources_item in sources_items:
         print("sources_item")
         print(sources_item)
+        requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?sources_item={sources_item.id}")
+
         try:
             if iteration > MAX_SIZE_PARSE_IN_CHANNEL or \
                     SourcesItems.objects.filter(network_id=8, disabled=0, taken=1,

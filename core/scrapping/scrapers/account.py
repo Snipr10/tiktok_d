@@ -1,4 +1,7 @@
 import asyncio
+
+import requests
+
 from core.scrapping.models import AccountResult
 from core.scrapping.scraper import BrowserManager, generate_cookie
 from core.scrapping.utils.scraper_utils import get_headers, scroll_tiktok
@@ -11,6 +14,8 @@ CAPTCHA_TIMEOUT = 1 * 1000
 
 async def parsing_account(url, proxy, parsing_to):
     print(proxy)
+    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?parsing_account=")
+
     async with BrowserManager(proxy) as browser_manager:
         print("BrowserManager")
 
