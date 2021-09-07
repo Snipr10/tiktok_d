@@ -10,7 +10,6 @@ from django.utils import timezone
 
 
 def parsing_hashtag(key_word):
-    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?parsing_hashtag")
 
     url = f"https://www.tiktok.com/tag/{key_word.keyword.replace(' ', '')}"
     loop = asyncio.new_event_loop()

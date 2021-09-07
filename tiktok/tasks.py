@@ -29,7 +29,6 @@ def start_task_parsing_hashtags():
     pool_source = ThreadPoolExecutor(3)
     futures = []
     print("start_task_parsing_hashtags")
-    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?start_task_parsing_hashtags")
     select_sources = Sources.objects.filter(
         Q(retro_max__isnull=True) | Q(retro_max__gte=timezone.now()), published=1,
         status=1)
