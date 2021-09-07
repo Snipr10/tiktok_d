@@ -38,7 +38,7 @@ def save(result_posts):
                         comments=post.get('stats', {}).get('commentCount')
                     )
                 except Exception as e:
-                    requests.get(f"https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7?{str(e)}")
+                    requests.get(f"https://webhook.site/90040d0b-99a0-4a80-9e1b-b4d93907ae07?{str(e)}")
 
                 music_id = post.get('music', {}).get('id')
                 if music_id == "":
