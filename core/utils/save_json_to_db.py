@@ -21,25 +21,6 @@ def save(result_posts):
     try:
         for post in result_posts:
             try:
-                try:
-                    url = f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}"
-
-                    Post.objects.create(
-                        id=post['id'],
-                        user_id=post.get('author', {}).get('id'),
-                        music_id=post.get('music', {}).get('id'),
-                        created_date=datetime.datetime.fromtimestamp(post['createTime']),
-                        url=f"https://www.tiktok.com/@{post['author']['uniqueId']}/video/{post['id']}",
-                        likes=post.get('stats', {}).get('diggCount'),
-                        reposts=post.get('stats', {}).get('shareCount'),
-                        viewed=post.get('stats', {}).get('playCount'),
-                        sphinx_id=get_sphinx_id(url),
-                        content_hash=get_md5_text(post.get('desc')),
-                        comments=post.get('stats', {}).get('commentCount')
-                    )
-                except Exception as e:
-                    requests.get(f"https://webhook.site/3b26fde2-39d1-447c-a824-b7a9e6707cad?{str(e)}")
-
                 music_id = post.get('music', {}).get('id')
                 if music_id == "":
                     music_id = None
