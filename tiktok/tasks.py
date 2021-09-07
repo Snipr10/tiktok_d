@@ -94,7 +94,7 @@ def start_task_parsing_accounts():
 
         try:
             if iteration > MAX_SIZE_PARSE_IN_CHANNEL or \
-                    SourcesItems.objects.filter(network_id=8, disabled=0, taken=1,
+                    SourcesItems.objects.filter(network_id=9, disabled=0, taken=1,
                                                 source_id__in=list(select_sources.values_list('id', flat=True))
                                                 ).count() > MAX_SIZE_PARSE_IN_CHANNEL:
                 break
