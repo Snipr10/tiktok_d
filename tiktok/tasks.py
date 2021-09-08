@@ -25,6 +25,16 @@ def start_task_webhook():
 
 
 @app.task
+def stop_keys():
+    Keyword.objects.filter(network_id=9, enabled=1, taken=1).update(taken=0)
+
+
+@app.task
+def stop_channels():
+    SourcesItems.objects.filter(network_id=9, disabled=0, taken=1).update(taken=0)
+
+
+@app.task
 def start_task_parsing_hashtags():
     pool_source = ThreadPoolExecutor(3)
     futures = []
