@@ -29,10 +29,10 @@ app.conf.beat_schedule = {
     # },
     'stop_keys': {
         'task': 'tiktok.tasks.stop_keys',
-        'schedule': crontab(minute='*/q')
+        'schedule': crontab(minute='*/1')
     },
     'stop_channels': {
         'task': 'tiktok.tasks.stop_channels',
-        'schedule': crontab(minute='*/q')
+        'schedule': crontab(minute='*/1')
     },
 }
