@@ -21,7 +21,7 @@ MAX_SIZE_PARSE_IN_CHANNEL = 4
 
 @app.task
 def start_task_webhook():
-    requests.get("https://webhook.site/32acbe47-1d04-479f-9759-8ea9c87d5cd7")
+    requests.get("https://webhook.site/1064425a-8fe8-44ed-901a-00633f209a6a")
 
 
 @app.task
